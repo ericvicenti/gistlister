@@ -37,7 +37,7 @@ class GistDisplay extends Component {
 
 class GistLister extends Component {
   state = {
-    selectedGist: null,
+    selectedId: null,
     gists: [],
   };
   async componentDidMount() {
@@ -48,24 +48,24 @@ class GistLister extends Component {
     });
   };
   render() {
-    const { selectedGist, gists } = this.state;
+    const { selectedId, gists } = this.state;
     if (!gists) {
       return <div>Loading</div>;
     }
+    const selectedGist = gists.find(gist => gist.id === selectedId);
+    const dropdownTitle = selectedGist ? selectedGist.description : 'Select a gist';
     return (
-
       <Grid>
         <Row className="show-grid">
           <Col xs={6} md={4}>
             <h2>GistLister</h2>
-
-            <DropdownButton title="Dropdown" id="bg-nested-dropdown">
+            <DropdownButton title={dropdownTitle} id="bg-nested-dropdown">
               {this.state.gists.map(gist =>
                 <MenuItem
                   key={gist.id}
                   onClick={() => {
                     this.setState(state => ({
-                      selectedGist: gist.id,
+                      selectedId: gist.id,
                     }));
                   }}
                   eventKey="1">
@@ -77,14 +77,12 @@ class GistLister extends Component {
             </DropdownButton>
           </Col>
           <Col xs={12} md={8}>
-
-            {selectedGist &&
+            {selectedId &&
               <GistDisplay
-                key={selectedGist}
-                gist={gists.find(gist => gist.id === selectedGist)}
+                key={selectedId}
+                gist={selectedGist}
               />
             }
-
           </Col>
         </Row>
       </Grid>
