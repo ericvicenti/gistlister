@@ -58,7 +58,7 @@ class GistLister extends Component {
       <Grid>
         <Row className="show-grid">
           <Col xs={6} md={4}>
-            <h2>GistLister</h2>
+            <h2>GistLister 2</h2>
             <DropdownButton title={dropdownTitle} id="bg-nested-dropdown">
               {this.state.gists.map(gist =>
                 <MenuItem
